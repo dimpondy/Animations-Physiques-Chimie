@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Animations Physique-Chimie</title>
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #f8f7f4;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f0eeeb;
+  --fg: #1a1a1a;
+  --fg-muted: #6b6560;
+  --fg-dim: #9e9891;
+  --accent: #2d5cd2;
+  --accent-soft: #e8eefb;
+  --accent-hover: #1e4bba;
+  --border: #e5e2dc;
+  --border-light: #f0eeeb;
+  --tag-bg: #f0eeeb;
+  --tag-active-bg: #2d5cd2;
+  --tag-active-fg: #ffffff;
+  --search-bg: #ffffff;
+  --search-border: #d8d4ce;
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+  --shadow-card-hover: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  --hero-gradient: linear-gradient(135deg, #1a2a4a 0%, #2d5cd2 50%, #4a7fff 100%);
+  --cat-chimie: #e74c3c;
+  --cat-piles: #e67e22;
+  --cat-energie: #f1c40f;
+  --cat-cinematique: #2ecc71;
+  --cat-electricite: #3498db;
+  --cat-lentilles: #9b59b6;
+  --cat-ondes: #1abc9c;
+  --cat-thermo: #e84393;
+  --cat-divers: #636e72;
+  --cat-superieur: #6c5ce7;
+}
+
+/* Light mode only */
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  margin: 0;
+  padding-inline: 16px;
+  padding-block: 0;
+  line-height: 1.5;
+}
+
+.hero {
+  background: var(--hero-gradient);
+  margin: 0 -16px;
+  padding: calc(env(safe-area-inset-top, 0px) + 48px) 24px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(10px);
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.hero-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero h1 {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  position: relative;
+}
+
+.hero p {
+  color: rgba(255,255,255,0.75);
+  font-size: 1rem;
+  margin: 0;
+  position: relative;
+}
+
+.hero .count-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  color: #fff;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 16px;
+  position: relative;
+}
+
+.hero-author {
+  margin-top: 12px;
+  font-size: 0.72rem;
+  color: rgba(255,255,255,0.5);
+  position: relative;
+  letter-spacing: 0.02em;
+}
+
+.controls {
+  max-width: 960px;
+  margin: -24px auto 0;
+  position: relative;
+  z-index: 2;
+}
+
+.search-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.search-wrap svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  stroke: var(--fg-dim);
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+
+.search-input {
+  width: 100%;
+  padding: 14px 16px 14px 46px;
+  border: 1px solid var(--search-border);
+  border-radius: 14px;
+  background: var(--search-bg);
+  color: var(--fg);
+  font-size: 0.95rem;
+  font-family: inherit;
+  outline: none;
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.search-input::placeholder { color: var(--fg-dim); }
+.search-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 32px;
+  justify-content: center;
+}
+
+.tag {
+  padding: 7px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--tag-bg);
+  color: var(--fg-muted);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tag.active {
+  background: var(--tag-active-bg);
+  color: var(--tag-active-fg);
+  border-color: var(--tag-active-bg);
+}
+
+.tag .dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.results-info {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--fg-dim);
+  margin-bottom: 20px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+  max-width: 960px;
+  margin: 0 auto 60px;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 0;
+  text-decoration: none;
+  color: var(--fg);
+  box-shadow: var(--shadow-card);
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-card-hover);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  background: var(--bg-card-hover);
+}
+
+.card-cat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-dim);
+}
+
+.card-cat .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.card-title {
+  font-family: 'Space Grotesk', 'Inter', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--fg);
+}
+
+.card-arrow {
+  margin-top: auto;
+  align-self: flex-end;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.card:hover .card-arrow {
+  background: var(--accent);
+  transform: translateX(2px);
+}
+
+.card-arrow svg {
+  width: 14px;
+  height: 14px;
+  stroke: var(--accent);
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.2s;
+}
+
+.card:hover .card-arrow svg { stroke: var(--tag-active-fg); }
+
+.card-preview {
+  aspect-ratio: 5/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  background: #000;
+}
+
+.card-preview img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+/* Vignettes claires converties en sombre (inversion + rotation de teinte 180°) */
+.card-preview img.inv { filter: invert(1) hue-rotate(180deg); }
+
+.card:hover .card-preview img { transform: scale(1.04); }
+
+.card-preview .po {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0);
+  transition: background 0.25s;
+}
+
+.card:hover .po { background: rgba(0,0,0,0.06); }
+
+.po .pb {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.25s, transform 0.25s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.card:hover .pb { opacity: 1; transform: scale(1); }
+
+.pb svg {
+  width: 14px;
+  height: 14px;
+  fill: #444;
+  stroke: none;
+  margin-left: 2px;
+}
+
+.card-body {
+  padding: 14px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.empty-state svg {
+  width: 48px;
+  height: 48px;
+  stroke: var(--fg-dim);
+  fill: none;
+  stroke-width: 1.5;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  color: var(--fg-muted);
+  font-size: 1rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 24px 16px 32px;
+  color: var(--fg-dim);
+  font-size: 0.78rem;
+  border-top: 1px solid var(--border-light);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.footer a { color: var(--accent); text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.footer-contact { display: inline-block; margin-top: 4px; }
+.footer-contact a { user-select: all; }
+
+.back-to-top {
+  position: fixed;
+  bottom: calc(env(safe-area-inset-bottom, 0px) + 20px);
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 16px;
+  border-radius: 24px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(45,92,210,0.35);
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s, background 0.2s;
+}
+
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.back-to-top:hover { background: var(--accent-hover); }
+
+.back-to-top svg {
+  width: 16px;
+  height: 16px;
+  stroke: #fff;
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+@media (max-width: 500px) {
+  .hero { padding: calc(env(safe-area-inset-top, 0px) + 32px) 16px 36px; }
+  .grid { grid-template-columns: 1fr; }
+  .tags { justify-content: flex-start; }
+  .back-to-top { padding: 10px 14px; font-size: 0.78rem; right: 14px; bottom: calc(env(safe-area-inset-bottom, 0px) + 14px); }
+}
+</style>
+
+<div class="hero">
+  <div class="hero-icon">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+  </div>
+  <h1>Animations Physique-Chimie</h1>
+  <p>Simulations interactives pour le lycée et le supérieur</p>
+  <div class="count-badge" id="countBadge">78 animations</div>
+  <div class="hero-author">Jacquier-Roux Dimitri &mdash; Enseignant au Lycée Ella Fitzgerald, Vienne</div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+    <input class="search-input" type="text" id="search" placeholder="Rechercher une animation..." autocomplete="off">
+  </div>
+  <div class="tags" id="tags"></div>
+</div>
+
+<div class="results-info" id="resultsInfo" hidden></div>
+<div class="grid" id="grid"></div>
+<div class="empty-state" id="empty" hidden>
+  <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/><path d="M8 11h6"/></svg>
+  <p>Aucune animation ne correspond<br>à votre recherche.</p>
+</div>
+
+<button class="back-to-top" id="backToTop" aria-label="Retour au menu">
+  <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  Retour au Menu
+</button>
+
+<div class="footer">
+  D. Jacquier-Roux &middot; Lycée Ella Fitzgerald, Vienne<br>
+  <a href="https://ellasciences.jimdofree.com" target="_blank" rel="noopener">ellasciences.jimdofree.com</a><br>
+  <span class="footer-contact">Contact (erreur ou ajout) : <a href="mailto:dimitri.jacquierroux@ac-grenoble.fr">dimitri.jacquierroux@ac-grenoble.fr</a></span>
+</div>
+
+<script>
+const DATA = [
+  // Chimie
+  {t:"Titrage colorimétrique", c:"Chimie", u:"https://claude.ai/public/artifacts/614c2af2-c177-44c6-adb8-ca45195a5da7", s:"titrage-colorimetrique"},
+  {t:"Titrage par dosage conductimétrique", c:"Chimie", u:"https://claude.ai/public/artifacts/3e7b3f46-6eb7-4b42-8124-a8cf3022948b", s:"titrage-conductimetrique"},
+  {t:"Volume molaire", c:"Chimie", u:"https://claude.ai/public/artifacts/50553484-9764-4662-8c44-73258c7ee2c1", s:"volume-molaire"},
+  {t:"Tableau d'avancement", c:"Chimie", u:"https://claude.ai/public/artifacts/cd1b8c7b-0108-4bbb-9f27-655a8f71019a", s:"tableau-avancement"},
+  {t:"Atome et ions", c:"Chimie", u:"https://claude.ai/public/artifacts/6f80ca3c-7fd2-4838-b194-477d7f308811", s:"atome-ions"},
+  {t:"Exp. de Rutherford", c:"Chimie", u:"https://claude.ai/public/artifacts/a2ab17db-293b-42a4-b11c-821c56b08993", s:"rutherford-1"},
+  {t:"Molécule du quotidien", c:"Chimie", u:"https://claude.ai/artifact/WU8GZjYi1xirXanX9STJqr", s:"molecule-quotidien"},
+  {t:"Dissolution et précipitation", c:"Chimie", u:"https://claude.ai/artifact/TwVxtuRJs4Z823N8pPxvAq", s:"dissolution-precipitation"},
+  {t:"Dissolution de NaCl", c:"Chimie", u:"https://claude.ai/artifact/LZe49AVW4v3wu3o6PnP8zi", s:"dissolution-nacl"},
+  {t:"Constructeur d'atome (Lewis)", c:"Chimie", u:"https://claude.ai/public/artifacts/d94000e9-4c6a-41e4-8414-d924c0929de4", s:"constructeur-atome"},
+  {t:"Constructeur de molécules (Lewis)", c:"Chimie", u:"https://claude.ai/public/artifacts/55b30098-375b-4d69-97b7-90cbe5379db1", s:"constructeur-molecules"},
+  {t:"Test d'identification d'ions", c:"Chimie", u:"https://claude.ai/artifact/APRYf3HdV33v5GM9cXVBHA", s:"test-ions"},
+  {t:"Titrage par étalonnage spectro", c:"Chimie", u:"https://claude.ai/public/artifacts/6e7fe0bc-6f77-47ae-a99f-079efae195df", s:"titrage-etalonnage"},
+  {t:"Roue chromatique", c:"Chimie", u:"https://claude.ai/public/artifacts/84446c55-0cda-4760-96b6-559c499c79d2", s:"roue-chromatique"},
+  {t:"Couleur des objets", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/e8d2f364-b168-4a07-9b65-7352f85c8614", s:"couleur-objets"},
+  {t:"Cinétique d'ordre 1", c:"Chimie", u:"https://claude.ai/public/artifacts/55f7be87-f458-4d72-aee5-22b9d36ea250", s:"cinetique-ordre1"},
+  {t:"Polarisation des liaisons", c:"Chimie", u:"https://claude.ai/public/artifacts/2d1bb65c-2dfa-4226-aa51-adeb82c229d4", s:"polarisation-liaisons"},
+  {t:"Géométrie VSEPR", c:"Chimie", u:"https://claude.ai/public/artifacts/81b2b36f-cf94-4bfa-9220-b052d07dcdfc", s:"geometrie-vsepr"},
+  {t:"Réseaux cristallins", c:"Chimie", u:"https://claude.ai/public/artifacts/a9691b0a-d09b-422c-b343-b2acc8a125d3", s:"reseaux-cristallins-1"},
+  {t:"Réseaux cristallins (2)", c:"Chimie", u:"https://claude.ai/artifact/8aAC3VWSgSf337215RD8Z6", s:"reseaux-cristallins-2"},
+  {t:"Titrage pH-métrique", c:"Chimie", u:"https://claude.ai/public/artifacts/72af9596-e777-4594-896d-bc15b7119f01", s:"titrage-ph"},
+  {t:"Courbe dérivée", c:"Chimie", u:"https://claude.ai/public/artifacts/9eeec488-887f-4f3f-bb13-21935896cab7", s:"courbe-derivee"},
+  {t:"Diagramme de prédominance", c:"Chimie", u:"https://claude.ai/public/artifacts/43b26895-d861-4555-954f-ce73e67b40dc", s:"diagramme-predominance"},
+  {t:"Mécanismes réactionnels", c:"Chimie", u:"https://claude.ai/public/artifacts/b1bd89dd-8706-4112-94f2-b2c3a6c3ec6d", s:"mecanismes-reactionnels"},
+  {t:"Formule de Lewis", c:"Chimie", u:"https://claude.ai/public/artifacts/c4f9ea30-f121-405b-833b-b2c1707852e3", s:"formule-lewis"},
+  {t:"Spectres IR de 21 molécules", c:"Chimie", u:"https://claude.ai/public/artifacts/d599ea86-8ce5-4e5f-bfd4-1283ee09800f", s:"spectres-ir"},
+  {t:"Équilibrer des équations REDOX", c:"Chimie", u:"https://claude.ai/artifact/ENwyymYyhsuo6bDochjyjn", s:"redox-1"},
+  {t:"Avancement de réaction", c:"Chimie", u:"https://claude.ai/artifact/Azgjsd3QMoW48m58PodvM1", s:"redox-2"},
+
+  // Piles et électrolyses
+  {t:"Pile électrochimique", c:"Piles et électrolyses", u:"https://claude.ai/public/artifacts/05f0763a-110a-4ca4-82e1-3e1a5a67fb6d", s:"pile-electrochimique"},
+  {t:"Électrolyse", c:"Piles et électrolyses", u:"https://claude.ai/public/artifacts/c7c4284e-3c70-46c3-8bf5-c36eafbe413e", s:"electrolyse"},
+  {t:"Pile à combustible 1", c:"Piles et électrolyses", u:"https://claude.ai/public/artifacts/c4f84c43-039c-48bf-96d8-17ac7f741873", s:"pile-combustible-1"},
+  {t:"Pile à combustible 2", c:"Piles et électrolyses", u:"https://claude.ai/public/artifacts/3ba7adf5-b277-465d-9d41-e0dc25cb5d22", s:"pile-combustible-2"},
+
+  // Aspects énergétiques
+  {t:"Énergie Ep, Ec et Em : Skieur", c:"Aspects énergétiques", u:"https://claude.ai/public/artifacts/eaceae5b-7c45-4719-b89d-51a7e4b58678", s:"energie-skieur"},
+  {t:"Énergie Ep, Ec et Em : Pendule", c:"Aspects énergétiques", u:"https://claude.ai/public/artifacts/69695436-c89d-41b5-a74a-585f1f1a36fc", s:"energie-pendule"},
+
+  // Cinématique
+  {t:"Chute libre — Chronophotographie", c:"Cinématique", u:"https://claude.ai/public/artifacts/d6eb916f-3107-4e08-9fff-22498ad833d6", s:"chute-libre"},
+  {t:"Tir balistique — Chronophotographie", c:"Cinématique", u:"https://claude.ai/public/artifacts/80c4528c-5968-423f-b8ee-1993face9440", s:"tir-balistique"},
+  {t:"Masse dans un champ g", c:"Cinématique", u:"https://claude.ai/public/artifacts/a11d6163-54ae-4d86-b910-c1113dc64468", s:"masse-champ-g"},
+  {t:"Champ gravitationnel", c:"Cinématique", u:"https://claude.ai/public/artifacts/717580a2-f342-4357-9ee2-91c8aa388fa8", s:"champ-gravitationnel"},
+  {t:"Particule dans un champ E", c:"Cinématique", u:"https://claude.ai/public/artifacts/65b826c3-79d1-45e8-9a24-a39308126dcd", s:"particule-champ-e"},
+  {t:"Exp. de Millikan", c:"Cinématique", u:"https://claude.ai/public/artifacts/6a237eb2-2fb2-4e9f-baa8-4218af86df21", s:"millikan"},
+  {t:"Accélérateur linéaire LINAC", c:"Cinématique", u:"https://claude.ai/public/artifacts/9a4299a8-3238-47cb-94b9-2b7e1e3eaaaa", s:"linac"},
+  {t:"Lois de Kepler", c:"Cinématique", u:"https://claude.ai/public/artifacts/17b1050b-a343-4c4d-b239-c5dd445fcc69", s:"kepler"},
+  {t:"Spectromètre de masse", c:"Cinématique", u:"https://claude.ai/public/artifacts/0f82928b-421c-406b-a45f-f5801c7d60b9", s:"spectrometre-masse"},
+  {t:"Le cyclotron", c:"Cinématique", u:"https://claude.ai/public/artifacts/f355c378-18b5-42f3-999f-61687a32498c", s:"cyclotron"},
+
+  // Électricité
+  {t:"Condensateur", c:"Électricité", u:"https://claude.ai/public/artifacts/8784a08e-4684-4e02-a09d-d2e453444d80", s:"condensateur"},
+  {t:"Circuit RC", c:"Électricité", u:"https://claude.ai/public/artifacts/7dd5000a-ae70-4067-aa03-5a0e774a8e29", s:"circuit-rc"},
+  {t:"Effet photoélectrique", c:"Électricité", u:"https://claude.ai/public/artifacts/8d675f72-651a-4e86-8faa-2c33c29752e2", s:"effet-photoelectrique"},
+  {t:"Tracé de U=f(I) et P=f(I)", c:"Électricité", u:"https://claude.ai/public/artifacts/7b0446da-d642-464d-a51b-5b7d5f787ca0", s:"trace-ui-pi"},
+
+  // Lentilles et réfraction
+  {t:"Loi de réfraction", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/92df7857-4912-4fd1-a20d-725cbee3e3bc", s:"loi-refraction"},
+  {t:"Dispersion par un prisme", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/3fab6ebc-c6c4-4336-b200-b4a789473a2f", s:"dispersion-prisme"},
+  {t:"Spectre d'émission et d'absorption", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/ba2c282a-ccdc-44ec-bd59-fb2899089c9d", s:"spectre-emission-absorption"},
+  {t:"Lentille", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/dffb9850-aa81-4b37-9780-d66ccd5deab5", s:"lentille"},
+  {t:"Réfraction et dispersion par une lentille", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/ef31be81-71d9-471a-9893-ce41cb94de67", s:"refraction-dispersion-lentille"},
+  {t:"Auto-collimation", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/464bf493-58cb-4d2e-af9e-62245fc55eae", s:"auto-collimation"},
+  {t:"Arc-en-ciel : dispersion par une goutte", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/247afa11-51ea-4840-b665-7e1b6032e400", s:"arc-en-ciel"},
+  {t:"Œil réduit", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/37a252e2-9fde-4877-bb64-a882ffec3adb", s:"oeil-reduit"},
+  {t:"Cercle oculaire", c:"Lentilles et réfraction", u:"https://claude.ai/public/artifacts/d7ebc2bf-2be5-4a7c-a7df-53ac5d9f2a3f", s:"cercle-oculaire"},
+
+  // Ondes et Spectres
+  {t:"Ondes et déphasages", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/9009c795-3cae-4c38-a130-481b29451d31", s:"ondes-dephasages"},
+  {t:"Spectre lumineux", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/c8a1fe09-82f2-4717-97b7-9bd1dd068bba", s:"spectre-lumineux"},
+  {t:"Diffraction : fente ou trou d'Young", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/683d5ed3-9c15-45f2-a1f5-1171a9a07a36", s:"diffraction-young"},
+  {t:"Interférences : fentes d'Young", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/a8bc3a8c-dd04-4284-898a-22b91ea1d777", s:"interferences-fentes"},
+  {t:"Interférences : trous d'Young", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/9a66c7e3-ec63-4522-89e6-70fc4d6931e1", s:"interferences-trous"},
+  {t:"Effet Doppler", c:"Ondes et spectres", u:"https://claude.ai/artifact/1dT21WSdCJ6UTa2KwkWwAt", s:"effet-doppler"},
+  {t:"Loi de Wien", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/e675fc59-8d84-4535-851a-f2a7ce58977a", s:"loi-wien"},
+  {t:"Critères de Rayleigh", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/9de60e16-d727-4b30-91f6-f3cd7e7d5213", s:"criteres-rayleigh"},
+  {t:"Diffraction de Bragg", c:"Ondes et spectres", u:"https://claude.ai/public/artifacts/22ddccfb-9467-494a-96bb-6bc960ea2630", s:"diffraction-bragg"},
+
+  // Thermo et Dynamique des Fluides
+  {t:"Pression statique des fluides", c:"Thermo et fluides", u:"https://claude.ai/public/artifacts/312f30f2-ab19-46a1-98bf-d8b458e22f3e", s:"pression-statique"},
+  {t:"Loi de Mariotte (P·V = Cste)", c:"Thermo et fluides", u:"https://claude.ai/public/artifacts/a63ab7c2-aaf8-4c30-adad-3fc8751cafc1", s:"loi-mariotte"},
+  {t:"Débit volumique", c:"Thermo et fluides", u:"https://claude.ai/public/artifacts/6dc6e1df-937f-4a34-af5d-1bd1f670ce47", s:"debit-volumique"},
+  {t:"Dynamique des fluides : tube incliné", c:"Thermo et fluides", u:"https://claude.ai/public/artifacts/15e4bc03-9917-4b01-a95f-df64b5b7e61b", s:"tube-incline"},
+  {t:"Café et loi de Newton", c:"Thermo et fluides", u:"https://claude.ai/public/artifacts/7a2ff654-13f2-477e-8d93-341500a19406", s:"cafe-newton"},
+
+  // Divers
+  {t:"Banc Kofler", c:"Divers", u:"https://claude.ai/code/artifact/dc1bb514-9607-4ed6-a00b-3f540afbef9b", s:"banc-kofler"},
+  {t:"CCM et CLC", c:"Chimie", u:"https://claude.ai/artifact/XFpWrag4TktL86Ue2txYPq", s:"ccm-clc"},
+  {t:"Grille de compétences expérimentales", c:"Divers", u:"https://claude.ai/public/artifacts/411847f3-cd96-456d-a72e-5deb20d9980f", s:"grille-competences"},
+  {t:"Montages à légender", c:"Divers", u:"https://claude.ai/artifact/LjFEXWPX8yPNT6d7HCf3hj", s:"montages-legender"},
+  {t:"Grille compétences Info / Micro-contrôleur", c:"Divers", u:"https://claude.ai/artifact/5WSV4LTbtrXLoRLVfdcXh3", s:"grille-info-micro"},
+  {t:"Dessiner des schémas", c:"Divers", u:"https://claude.ai/artifact/6npkvWfYTDPEuy2xuTTCdc", s:"dessiner-schemas"},
+
+  // Supérieur
+  {t:"Spectre de masse", c:"Supérieur", u:"https://claude.ai/public/artifacts/85afca54-b3dd-48ee-8960-d6f17bfe3a7a", s:"spectre-masse-sup"},
+  {t:"Spectre RMN", c:"Supérieur", u:"https://claude.ai/public/artifacts/8a8d93dd-59b2-456d-8983-23d5b862ee69", s:"spectre-rmn"},
+  {t:"Spectre IR", c:"Supérieur", u:"https://claude.ai/public/artifacts/d599ea86-8ce5-4e5f-bfd4-1283ee09800f", s:"spectre-ir-sup"}
+];
+
+const CAT_COLORS = {
+  "Chimie": "var(--cat-chimie)",
+  "Piles et électrolyses": "var(--cat-piles)",
+  "Aspects énergétiques": "var(--cat-energie)",
+  "Cinématique": "var(--cat-cinematique)",
+  "Électricité": "var(--cat-electricite)",
+  "Lentilles et réfraction": "var(--cat-lentilles)",
+  "Ondes et spectres": "var(--cat-ondes)",
+  "Thermo et fluides": "var(--cat-thermo)",
+  "Divers": "var(--cat-divers)",
+  "Supérieur": "var(--cat-superieur)"
+};
+
+const CP={
+"Chimie":{bg:"linear-gradient(135deg,#fde8e8,#f9c4c4)",fg:"#c0392b"},
+"Piles et électrolyses":{bg:"linear-gradient(135deg,#fef3e2,#fcdcaa)",fg:"#d35400"},
+"Aspects énergétiques":{bg:"linear-gradient(135deg,#fef9e7,#fce9a8)",fg:"#b7950b"},
+"Cinématique":{bg:"linear-gradient(135deg,#e8f8f0,#b5ead7)",fg:"#1e8449"},
+"Électricité":{bg:"linear-gradient(135deg,#e8f0fe,#b8d4fe)",fg:"#2471a3"},
+"Lentilles et réfraction":{bg:"linear-gradient(135deg,#f0e6f6,#d2b4e8)",fg:"#7d3c98"},
+"Ondes et spectres":{bg:"linear-gradient(135deg,#e0f7f4,#a3e4d7)",fg:"#148f77"},
+"Thermo et fluides":{bg:"linear-gradient(135deg,#fce4ec,#f8bbd0)",fg:"#c2185b"},
+"Divers":{bg:"linear-gradient(135deg,#eceff1,#cfd8dc)",fg:"#546e7a"},
+"Supérieur":{bg:"linear-gradient(135deg,#ede7f6,#c5b3e6)",fg:"#5e35b1"}
+};
+const CATS = Object.keys(CAT_COLORS);
+
+// Vignettes claires à convertir en sombre par inversion CSS (fonds blancs -> noirs)
+const INV = new Set(["banc-kofler","cafe-newton","ccm-clc","cercle-oculaire","chute-libre","circuit-rc","condensateur","constructeur-molecules","couleur-objets","courbe-derivee","dessiner-schemas","diagramme-predominance","dissolution-precipitation","dissolution-nacl","effet-doppler","geometrie-vsepr","grille-competences","grille-info-micro","lentille","loi-refraction","montages-legender","ondes-dephasages","pile-combustible-1","pile-combustible-2","pile-electrochimique","polarisation-liaisons","pression-statique","redox-1","redox-2","reseaux-cristallins-2","roue-chromatique","rutherford-1","molecule-quotidien","spectre-emission-absorption","spectre-ir-sup","spectre-lumineux","spectre-masse-sup","spectre-rmn","spectres-ir","tir-balistique","titrage-etalonnage","trace-ui-pi","volume-molaire"]);
+
+let activeCategory = null;
+
+function normalize(s) {
+  return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();
+}
+
+function renderTags() {
+  const el = document.getElementById("tags");
+  const allBtn = `<button class="tag ${activeCategory===null?'active':''}" data-cat="all">Toutes</button>`;
+  const catBtns = CATS.map(c => {
+    const count = DATA.filter(d => d.c === c).length;
+    return `<button class="tag ${activeCategory===c?'active':''}" data-cat="${c}"><span class="dot" style="background:${CAT_COLORS[c]}"></span>${c} (${count})</button>`;
+  }).join('');
+  el.innerHTML = allBtn + catBtns;
+  el.querySelectorAll('.tag').forEach(btn => {
+    btn.addEventListener('click', () => {
+      activeCategory = btn.dataset.cat === 'all' ? null : btn.dataset.cat;
+      render();
+    });
+  });
+}
+
+function render() {
+  const q = normalize(document.getElementById("search").value.trim());
+  let items = DATA;
+
+  if (activeCategory) items = items.filter(d => d.c === activeCategory);
+  if (q) items = items.filter(d => normalize(d.t).includes(q) || normalize(d.c).includes(q));
+
+  renderTags();
+
+  const grid = document.getElementById("grid");
+  const empty = document.getElementById("empty");
+  const info = document.getElementById("resultsInfo");
+  const badge = document.getElementById("countBadge");
+
+  badge.textContent = `${DATA.length} animations`;
+
+  if (items.length === 0) {
+    grid.innerHTML = '';
+    empty.hidden = false;
+    info.hidden = true;
+    return;
+  }
+
+  empty.hidden = true;
+
+  if (q || activeCategory) {
+    info.textContent = `${items.length} animation${items.length > 1 ? 's' : ''} trouvée${items.length > 1 ? 's' : ''}`;
+    info.hidden = false;
+  } else {
+    info.hidden = true;
+  }
+
+  grid.innerHTML = items.map(d => {
+    return `<a class="card" href="${d.u}" target="_blank" rel="noopener">
+      <div class="card-preview">
+        <img src="thumbs/${d.s}.jpg" alt="Aperçu : ${d.t}" loading="lazy" decoding="async" class="${INV.has(d.s)?'inv':''}">
+        <div class="po"><div class="pb"><svg viewBox="0 0 24 24"><polygon points="8,5 20,12 8,19"/></svg></div></div>
+      </div>
+      <div class="card-body">
+        <span class="card-cat"><span class="dot" style="background:${CAT_COLORS[d.c]}"></span>${d.c}</span>
+        <span class="card-title">${d.t}</span>
+        <span class="card-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+document.getElementById("search").addEventListener("input", render);
+render();
+
+// Force light mode
+document.documentElement.setAttribute('data-theme', 'light');
+
+// Back to top button
+const btn = document.getElementById("backToTop");
+let ticking = false;
+window.addEventListener("scroll", () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      btn.classList.toggle("visible", window.scrollY > 400);
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+btn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+</body>
+</html>
